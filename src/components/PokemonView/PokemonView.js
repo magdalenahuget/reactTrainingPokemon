@@ -3,23 +3,23 @@ import './PokemonView.css'
 const { useState } = require("react");
 
 
-const PokemonView = () => {
+const PokemonView = ({pokemonId}) => {
 
     const [name, setName] = useState('');
     const [photo, setPhoto] = useState('');
-    const [types, setTypes] = useState('');
+    const [types, setTypes] = useState([]);
     console.log("PokemonView")
 
     useEffect(() => {
         console.log("useEffect")
-        fetch('http://pokeapi.co/api/v2/pokemon/1')
+        fetch(`http://pokeapi.co/api/v2/pokemon/${pokemonId}`)
         .then(response => response.json())
         .then( data => {
             setName(data.name)
             setPhoto(data.sprites.front_default)
             setTypes(data.types.map(type => type.type.name))
         })
-    }, [])
+    }, [pokemonId])
 
     return (
         <div className="pokemon">
